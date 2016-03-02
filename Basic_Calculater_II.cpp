@@ -3,47 +3,47 @@
 #include <stack>
 using namespace std;
 
-bool isOperator(const char ch)
+bool isOperator(char ch)
 {
-    if (ch == '+' || ch == '-' || ch == '*' || ch == '/')
-        return true;
-    else return false;
+    return (ch == '+' || ch == '-' || ch == '/' || ch == '*');
 }
 
-int Priority(const char ch)
+//judge the  operator priority
+int Priority(char c)
 {
-    if (ch == '*' || ch == '/') return 2;
-    else if (ch == '+' || ch == '-')  return 1;
-    else return 0;
+    if (c == '*' || c == '/') {
+        return 2;
+    } else if( c== '+' || c == '-') {
+        return 1;
+    } else {
+        return 0;
+    }
 }
 
-long long calculate_exp(long long x, long long y, char op) 
-{
+long long calculate_exp(long long x, long long y, char op) {
     switch(op) {
-        case '+' : return x + y;
-        case '-' : return x - y;
-        case '*' : return x * y;
-        case '/' : return x / y;
+        case '+': return x + y;
+        case '-': return x - y;
+        case '*': return x * y;
+        case '/': return x / y;
     }
     return -1;
 }
 
-
-//two stacks solution
-int calculate_two_stacks(string& s) 
+//two stacks solutions
+int calculate_two_stacks(string &s)
 {
     s += "+0";
-    stack<long long> num_stack;  //put the number
-    stack<char> op_stack; //put the operations
+    stack<long long> num_stack;
+    stack<char> op_stack;
 
-    #define CALCULATE_IT {\
-        long long num1 = num_stack.top(); num_stack.pop();\
-        long long num2 = num_stack.top(); num_stack.pop();\
-        char op = op_stack.top(); op_stack.pop();\
-        num_stack.push(calculate_exp(num1, num2, op));\
-    }
-
-    for (size_t i = 0; i < s.size(); i++) {
+#define CALCULATE_IT { \
+    long long x = num_stack.top(); num_stack.pop();\
+    long long y = num_stack.top(); num_stack.pop();\
+    char op = op_stack.top(); op_stack.pop();\
+    num_stack.push(calculate_exp(x,y,op));\
+}
+    for (int i = 0; i < s.size(); i++) {
         char ch = s[i];
         if(isspace(ch)) continue;
         if(isdigit(ch)) {
@@ -53,36 +53,35 @@ int calculate_two_stacks(string& s)
                 num += s[i+1];
                 i++;
             }
-
             num_stack.push(stoll(num));
             continue;
         }
 
-        if(isOperator(ch)) {
-            while (!op_stack.empty() && Priority(op_stack.top()) >= Priority(ch)) {
-                CALCULATE_IT;
+        if(isOperator(ch)){
+            while(!op_stack.empty() && Priority(op_stack.top()) >= Priority(ch)){
+                CALCULATE_IT
             }
-
             op_stack.push(ch);
         }
     }
 
-    while (!op_stack.empty()) {
-        CALCULATE_IT;
+    while(!op_stack.empty()){
+        CALCULATE_IT
     }
+
     return num_stack.top();
 }
 
-int calculate(string s) {
+int calculate(string s)
+{
     return calculate_two_stacks(s);
 }
 
 int main(int argc, char* argv[])
 {
-    string exp = " 3+5 / 2";
+    string exp = " 3 + 5/2";
     if (argc > 1) {
         exp = argv[1];
     }
-
-    cout << "\"" << exp << "\" = " << calculate(exp) <<endl;
+    cout << "\"" << exp << "\" = " << calculate(exp) << endl;
 }
