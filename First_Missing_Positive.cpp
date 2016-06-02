@@ -8,7 +8,11 @@ using namespace std;
  *  
  *  for example, (considering the array is zero-based)
  *      1 => A[0], 2=>A[1], 3=>A[2] 
+ *
+ *  Then we can go through the array check the i+1==A[i], if not, just return i+1;
+ *
  */
+
 
 int firstMissingPositive_1(int A[], int n)
 {
