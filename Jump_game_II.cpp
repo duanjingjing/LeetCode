@@ -3,6 +3,10 @@
 #include <vector>
 using namespace std;
 
+/* Ideal:
+ * 采用贪心的算法，每次都从coverpos中选出下一步能够走最远的距离的index作为
+ * 下一步
+ */
 int jump(int A[], int n)
 {
     int steps = 0;
