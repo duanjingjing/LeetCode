@@ -42,6 +42,10 @@ int main(int argc, char* argv[])
 {
     const char* strs[] = {"eat", "tea", "tan", "ate", "nat", "bat"};
     vector<string> str(strs, strs+6);
+    for (int i=0; i<str.size(); i++){
+        cout << strs[i] << " ";
+    }
+    cout << endl;
     vector<vector<string> >res = anagrams(str);
     printMatrix(res);
 }
