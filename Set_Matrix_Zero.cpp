@@ -11,8 +11,8 @@ using namespace std;
 void setZeroes(vector<vector<int> >& matrix)
 {
   
-    bool* row = new bool[matrix.size()];
-    bool* column = new bool[matrix[0].size()];
+    bool* row = new bool[matrix.size()]();
+    bool* column = new bool[matrix[0].size()]();
 
     for(int i=0; i<matrix.size(); i++) {
         for(int j=0; j<matrix[i].size(); j++) {
@@ -29,5 +29,13 @@ void setZeroes(vector<vector<int> >& matrix)
                 matrix[i][j] = 0;
             }
         }
+    }
+}
+
+int main(int argc, char* argv[])
+{
+    bool* row = new bool[5]();
+    for(int i=0; i<5; i++) {
+        cout << row[i] << endl;
     }
 }
